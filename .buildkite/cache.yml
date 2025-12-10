@@ -1,6 +1,6 @@
 dependencies:
 - id: node
-  key: '{{ id }}-{{ agent.os }}-{{ agent.arch }}-{{ checksum "package-lock.json" }}'
+  key: '{{ id }}-{{ agent.os }}-{{ agent.arch }}-{{ checksum "bun.lock" }}'
   fallback_keys:
     - '{{ id }}-{{ agent.os }}-{{ agent.arch }}-'
   paths:
