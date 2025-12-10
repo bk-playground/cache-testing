@@ -2,8 +2,8 @@
 
 set -e -o pipefail
 
-export GOCACHE=$(HOME)/.go-build
-export GOMODCACHE=$(HOME)/go/pkg/mod
+export GOCACHE=${HOME}/.go-build
+export GOMODCACHE=${HOME}/go/pkg/mod
 
 echo "GOCACHE: $GOCACHE"
 echo "GOMODCACHE: $GOMODCACHE"
