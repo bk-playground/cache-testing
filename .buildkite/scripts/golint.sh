@@ -2,8 +2,8 @@
 
 set -e -o pipefail
 
-export GOCACHE=$(pwd)/.gocache
-export GOMODCACHE=$(pwd)/.gomodcache
+export GOCACHE=${HOME}/.go-build
+export GOMODCACHE=${HOME}/go/pkg/mod
 
 echo "--- Restoring cache"
 buildkite-agent cache restore --ids golang --bucket-url $CACHE_BUCKET_URL
