@@ -83,6 +83,6 @@ steps:
     commands:
       - buildkite-agent cache restore --ids node --bucket-url $CACHE_BUCKET_URL
       - bun install
-      - bun build
+      - bun run build
       - buildkite-agent cache save --ids node --bucket-url $CACHE_BUCKET_URL
   
