@@ -10,5 +10,5 @@ dependencies:
   fallback_keys:
     - '{{ id }}-{{ agent.os }}-{{ agent.arch }}-'
   paths:
-    - .gocache
-    - .gomodcache
+    - /root/.go-build
+    - /root/go/pkg/mod
