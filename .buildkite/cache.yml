@@ -5,3 +5,10 @@ dependencies:
     - '{{ id }}-{{ agent.os }}-{{ agent.arch }}-'
   paths:
     - node_modules
+- id: golang
+  key: '{{ id }}-{{ agent.os }}-{{ agent.arch }}-{{ checksum "go.mod" }}'
+  fallback_keys:
+    - '{{ id }}-{{ agent.os }}-{{ agent.arch }}-'
+  paths:
+    - .gocache
+    - .gomodcache

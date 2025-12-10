@@ -63,9 +63,7 @@ steps:
           propagate-aws-auth-tokens: true
           mount-buildkite-agent: true
     commands:
-      - go test -coverprofile coverage.out -coverpkg=./... ./...
-      - go run github.com/nikolaydubina/go-cover-treemap -coverprofile coverage.out > cover-tree.svg
-      - echo '<details><summary>Coverage tree map</summary><img src="artifact://cover-tree.svg" alt="Test coverage tree map" width="70%"></details>' | buildkite-agent annotate --style "info"
+      - .buildkite/scripts/gotest.sh
   - label: ":bun: build"
     plugins:
       - aws-assume-role-with-web-identity#v1.1.0:
