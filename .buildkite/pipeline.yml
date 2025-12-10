@@ -49,6 +49,9 @@
 
 steps:
   - label: ":go: test"
+    env:
+      GOCACHE: ".gocache"
+      GOMODCACHE: ".gomodcache"
     plugins:
       - aws-assume-role-with-web-identity#v1.1.0:
           role-arn: ${CACHE_ROLE}
