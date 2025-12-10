@@ -66,3 +66,23 @@ steps:
       - go test -coverprofile coverage.out -coverpkg=./... ./...
       - go run github.com/nikolaydubina/go-cover-treemap -coverprofile coverage.out > cover-tree.svg
       - echo '<details><summary>Coverage tree map</summary><img src="artifact://cover-tree.svg" alt="Test coverage tree map" width="70%"></details>' | buildkite-agent annotate --style "info"
+  - label: ":bun: build"
+    plugins:
+      - aws-assume-role-with-web-identity#v1.1.0:
+          role-arn: ${CACHE_ROLE}
+      - docker-compose#v5.6.0:
+          run: app
+          config: ".buildkite/docker-compose.yml"
+          retry:
+            automatic:
+              - limit: 2
+                exit_status: 17
+          propagate-environment: true
+          propagate-aws-auth-tokens: true
+          mount-buildkite-agent: true
+    commands:
+      - buildkite-agent cache restore --ids node --bucket-url $CACHE_BUCKET_URL
+      - bun install
+      - bun build
+      - buildkite-agent cache save --ids node --bucket-url $CACHE_BUCKET_URL
+  
