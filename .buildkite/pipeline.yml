@@ -50,6 +50,8 @@
 steps:
   - label: ":go: test"
     plugins:
+      - aws-assume-role-with-web-identity#v1.1.0:
+          role-arn: ${CACHE_ROLE}
       - docker-compose#v5.6.0:
           run: app
           config: ".buildkite/docker-compose.yml"
