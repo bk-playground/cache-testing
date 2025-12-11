@@ -5,10 +5,15 @@ dependencies:
     - '{{ id }}-{{ agent.os }}-{{ agent.arch }}-'
   paths:
     - node_modules
-- id: golang
+- id: golang-build
   key: '{{ id }}-{{ agent.os }}-{{ agent.arch }}-{{ checksum "go.mod" }}'
   fallback_keys:
     - '{{ id }}-{{ agent.os }}-{{ agent.arch }}-'
   paths:
     - ~/.go-build
+- id: golang-pkg
+  key: '{{ id }}-{{ agent.os }}-{{ agent.arch }}-{{ checksum "go.mod" }}'
+  fallback_keys:
+    - '{{ id }}-{{ agent.os }}-{{ agent.arch }}-'
+  paths:
     - ~/go/pkg/mod
