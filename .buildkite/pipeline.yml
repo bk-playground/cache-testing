@@ -95,8 +95,7 @@ steps:
           propagate-aws-auth-tokens: true
           mount-buildkite-agent: true
     commands:
-      - buildkite-agent cache restore --ids node --concurrency 20 --bucket-url $CACHE_BUCKET_URL
+      - buildkite-agent cache restore --ids node --bucket-url $CACHE_BUCKET_URL
       - bun install
       - bun run build
-      - buildkite-agent cache save --ids node --concurrency 20 --bucket-url $CACHE_BUCKET_URL
-  
+      - buildkite-agent cache save --ids node --bucket-url $CACHE_BUCKET_URL
