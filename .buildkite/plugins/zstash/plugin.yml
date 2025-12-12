@@ -1,0 +1,19 @@
+name: zstash
+description: zstash cache plugin for Buildkite. Supports Linux and macOS
+author: https://github.com/buildkite
+requirements:
+  - zstash
+configuration:
+  properties:
+    ids:
+      type: string
+      description: Comma separated list of ids to cache (e.g. "node,docker")
+      required: false
+    config:
+      type: string
+      description: Path to zstash config file (e.g. ".buildkite/cache.yml")
+      required: false
+    concurrency:
+      type: number
+      description: Number of concurrent cache operations.
+  additionalProperties: false

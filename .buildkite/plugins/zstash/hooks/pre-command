@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -Eeufo pipefail
+
+zstash_ids="${BUILDKITE_PLUGIN_ZSTASH_IDS:-}"
+zstash_config="${BUILDKITE_PLUGIN_ZSTASH_CONFIG:-}"
+zstash_concurrency="${BUILDKITE_PLUGIN_ZSTASH_CONCURRENCY:-}"
+zstash_command="buildkite-agent cache restore"
+
+if [ "${zstash_ids}" != "" ]; then
+  IFS=',' read -ra ids_array <<< "${zstash_ids}"
+  for id in "${ids_array[@]}"; do
+    zstash_command+=" --ids ${id}"
+  done
+fi
+
+if [ "${zstash_config}" != "" ]; then
+  zstash_command+=" --cache-config-file ${zstash_config}"
+fi
+
+# concurrency option present
+if [ "${zstash_concurrency}" != "" ]; then
+  zstash_command+=" --concurrency ${zstash_concurrency}"
+fi
+
+${zstash_command}

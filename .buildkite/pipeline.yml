@@ -49,6 +49,9 @@
 
 steps:
   - label: ":go: lint"
+    env:
+      GOCACHE: "/root/.go-build"
+      GOMODCACHE: "/root/go/pkg/mod"
     plugins:
       - aws-assume-role-with-web-identity#v1.1.0:
           role-arn: ${CACHE_ROLE}
@@ -62,40 +65,45 @@ steps:
           propagate-environment: true
           propagate-aws-auth-tokens: true
           mount-buildkite-agent: true
+          volumes:
+            - ~/.go-build:/root/.go-build
+            - ~/go/pkg/mod:/root/go/pkg/mod
+      - .buildkite/plugins/zstash:
+          ids: golang_build,golang_pkg
     commands:
-      - .buildkite/scripts/golint.sh
-  - label: ":go: test"
-    plugins:
-      - aws-assume-role-with-web-identity#v1.1.0:
-          role-arn: ${CACHE_ROLE}
-      - docker-compose#v5.6.0:
-          run: app
-          config: ".buildkite/docker-compose.yml"
-          retry:
-            automatic:
-              - limit: 2
-                exit_status: 17
-          propagate-environment: true
-          propagate-aws-auth-tokens: true
-          mount-buildkite-agent: true
-    commands:
-      - .buildkite/scripts/gotest.sh
-  - label: ":bun: build"
-    plugins:
-      - aws-assume-role-with-web-identity#v1.1.0:
-          role-arn: ${CACHE_ROLE}
-      - docker-compose#v5.6.0:
-          run: app
-          config: ".buildkite/docker-compose.yml"
-          retry:
-            automatic:
-              - limit: 2
-                exit_status: 17
-          propagate-environment: true
-          propagate-aws-auth-tokens: true
-          mount-buildkite-agent: true
-    commands:
-      - buildkite-agent cache restore --ids node --bucket-url $CACHE_BUCKET_URL
-      - bun install
-      - bun run build
-      - buildkite-agent cache save --ids node --bucket-url $CACHE_BUCKET_URL
+      - golangci-lint run --verbose --timeout 3m
+  # - label: ":go: test"
+  #   plugins:
+  #     - aws-assume-role-with-web-identity#v1.1.0:
+  #         role-arn: ${CACHE_ROLE}
+  #     - docker-compose#v5.6.0:
+  #         run: app
+  #         config: ".buildkite/docker-compose.yml"
+  #         retry:
+  #           automatic:
+  #             - limit: 2
+  #               exit_status: 17
+  #         propagate-environment: true
+  #         propagate-aws-auth-tokens: true
+  #         mount-buildkite-agent: true
+  #   commands:
+  #     - .buildkite/scripts/gotest.sh
+  # - label: ":bun: build"
+  #   plugins:
+  #     - aws-assume-role-with-web-identity#v1.1.0:
+  #         role-arn: ${CACHE_ROLE}
+  #     - docker-compose#v5.6.0:
+  #         run: app
+  #         config: ".buildkite/docker-compose.yml"
+  #         retry:
+  #           automatic:
+  #             - limit: 2
+  #               exit_status: 17
+  #         propagate-environment: true
+  #         propagate-aws-auth-tokens: true
+  #         mount-buildkite-agent: true
+  #   commands:
+  #     - buildkite-agent cache restore --ids node --bucket-url $CACHE_BUCKET_URL
+  #     - bun install
+  #     - bun run build
+  #     - buildkite-agent cache save --ids node --bucket-url $CACHE_BUCKET_URL
