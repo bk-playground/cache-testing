@@ -63,8 +63,10 @@ steps:
               - limit: 2
                 exit_status: 17
           propagate-environment: true
-          propagate-aws-auth-tokens: true
-          mount-buildkite-agent: true
+          cache-to:
+            - type=local,src=~/.buildx
+          cache-from:
+            - type=local,src=~/.buildx
           volumes:
             - ~/.go-build:/root/.go-build
             - ~/go/pkg/mod:/root/go/pkg/mod
