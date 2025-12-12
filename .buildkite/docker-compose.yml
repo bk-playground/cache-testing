@@ -5,4 +5,6 @@ services:
       dockerfile: .buildkite/Dockerfile.build
     volumes:
       - ..:/app
+      - ~/.go-build:/root/.go-build
+      - ~/go/pkg/mod:/root/go/pkg/mod
     working_dir: /app

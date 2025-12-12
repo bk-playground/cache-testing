@@ -53,6 +53,8 @@ steps:
       GOCACHE: "/root/.go-build"
       GOMODCACHE: "/root/go/pkg/mod"
     plugins:
+      - checkout#v0.1.0:
+          skip_git_clean: true
       - aws-assume-role-with-web-identity#v1.1.0:
           role-arn: ${CACHE_ROLE}
       - docker-compose#v5.6.0:
@@ -67,9 +69,6 @@ steps:
             - type=local,src=~/.buildx
           cache-from:
             - type=local,src=~/.buildx
-          volumes:
-            - ~/.go-build:/root/.go-build
-            - ~/go/pkg/mod:/root/go/pkg/mod
       - .buildkite/plugins/zstash:
           ids: golang_build,golang_pkg
     commands:
