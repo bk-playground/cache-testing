@@ -64,9 +64,9 @@ steps:
                 exit_status: 17
           propagate-environment: true
           cache-to:
-            - type=local,src=~/.buildx
+            - app:type=local,src=~/.buildx
           cache-from:
-            - type=local,src=~/.buildx
+            - app:type=local,src=~/.buildx
       - .buildkite/plugins/zstash:
           ids: buildx
           # golang_build,golang_pkg,
