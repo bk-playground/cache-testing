@@ -17,3 +17,9 @@ dependencies:
     - '{{ id }}-{{ agent.os }}-{{ agent.arch }}-'
   paths:
     - ~/go/pkg/mod
+- id: buildx
+  key: '{{ id }}-{{ agent.os }}-{{ agent.arch }}-{{ checksum ".buildkite/docker-compose.yml" }}'
+  fallback_keys:
+    - '{{ id }}-{{ agent.os }}-{{ agent.arch }}-'
+  paths:
+    - ~/.buildx
