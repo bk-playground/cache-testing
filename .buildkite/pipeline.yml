@@ -53,8 +53,6 @@ steps:
       GOCACHE: "/root/.go-build"
       GOMODCACHE: "/root/go/pkg/mod"
     plugins:
-      - checkout#v0.1.0:
-          skip_git_clean: true
       - aws-assume-role-with-web-identity#v1.1.0:
           role-arn: ${CACHE_ROLE}
       - docker-compose#v5.6.0:
