@@ -68,7 +68,8 @@ steps:
           cache-from:
             - type=local,src=~/.buildx
       - .buildkite/plugins/zstash:
-          ids: golang_build,golang_pkg,buildx
+          ids: buildx
+          # golang_build,golang_pkg,
     commands:
       - golangci-lint run --verbose --timeout 3m
   # - label: ":go: test"
