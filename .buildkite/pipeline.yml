@@ -48,26 +48,26 @@
 #           - echo '<details><summary>Coverage tree map</summary><img src="artifact://cover-tree.svg" alt="Test coverage tree map" width="70%"></details>' | buildkite-agent annotate --style "info"
 
 steps:
-  - label: "docker build"
-    key: docker_build
-    plugins:
-      - docker-compose#v5.6.0:
-          build: app
-          config: ".buildkite/docker-compose.yml"
-          retry:
-            automatic:
-              - limit: 2
-                exit_status: 17
-          create: true
-          cache-to:
-            - app:type=local,src=~/.buildx
-          cache-from:
-            - app:type=local,src=~/.buildx
-      - .buildkite/plugins/zstash:
-          ids: buildx
+  # - label: "docker build"
+  #   key: docker_build
+  #   plugins:
+  #     - docker-compose#v5.6.0:
+  #         build: app
+  #         config: ".buildkite/docker-compose.yml"
+  #         retry:
+  #           automatic:
+  #             - limit: 2
+  #               exit_status: 17
+  #         create: true
+  #         cache-to:
+  #           - app:type=local,src=~/.buildx
+  #         cache-from:
+  #           - app:type=local,src=~/.buildx
+  #     - .buildkite/plugins/zstash:
+  #         ids: buildx
 
   - label: ":go: lint"
-    depends_on: [docker_build]
+    # depends_on: [docker_build]
     env:
       GOCACHE: "/root/.go-build"
       GOMODCACHE: "/root/go/pkg/mod"
@@ -82,13 +82,13 @@ steps:
               - limit: 2
                 exit_status: 17
           propagate-environment: true
-          cache-to:
-            - app:type=local,src=~/.buildx
-          cache-from:
-            - app:type=local,src=~/.buildx
+          # cache-to:
+          #   - app:type=local,src=~/.buildx
+          # cache-from:
+          #   - app:type=local,src=~/.buildx
       - .buildkite/plugins/zstash:
-          ids: buildx
-          # golang_build,golang_pkg,
+          # ids: buildx
+          ids: golang_build,golang_pkg
     commands:
       - golangci-lint run --verbose --timeout 3m
   # - label: ":go: test"
