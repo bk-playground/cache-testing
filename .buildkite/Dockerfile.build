@@ -5,6 +5,12 @@ COPY --from=golangci/golangci-lint:v2.4.0@sha256:91460846c43b3de53eb77e968b17363
 COPY --from=ghcr.io/ko-build/ko:20b15e67194215721faba356b857fcf5d621dfaa /ko-app/ko /usr/local/bin/ko
 COPY --from=oven/bun:latest /usr/local/bin/bun /usr/local/bin/bun
 
+# Create a non-root user with a specific UID/GID
+ARG USER_ID=999
+ARG GROUP_ID=999
+RUN groupadd -g ${GROUP_ID} buildkite-agent && \
+    useradd -m -u ${USER_ID} -g ${GROUP_ID} buildkite-agent
+
 # install aws-cli
 RUN --mount=type=cache,target=/var/cache/apt \
     --mount=type=cache,target=/var/cache/debconf \
@@ -17,3 +23,7 @@ RUN --mount=type=cache,target=/var/cache/apt \
     && /opt/aws/install --update -i /usr/local/aws-cli -b /usr/local/bin \
     && rm -rf /tmp/awscliv2.zip /opt/aws \
     && aws --version
+
+RUN chown buildkite-agent:buildkite-agent /app
+
+USER buildkite-agent

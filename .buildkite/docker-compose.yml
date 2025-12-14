@@ -3,6 +3,10 @@ services:
     build:
       context: ..
       dockerfile: .buildkite/Dockerfile.build
+      args:
+        - USER_ID=${USER_ID:-999}
+        - GROUP_ID=${GROUP_ID:-999}
+    user: "${USER_ID:-999}:${GROUP_ID:-999}"
     volumes:
       - ..:/app
       - ~/.go-build:/root/.go-build
