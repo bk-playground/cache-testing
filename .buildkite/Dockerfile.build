@@ -24,6 +24,8 @@ RUN --mount=type=cache,target=/var/cache/apt \
     && rm -rf /tmp/awscliv2.zip /opt/aws \
     && aws --version
 
+RUN mkdir -p /app
+WORKDIR /app
 RUN chown buildkite-agent:buildkite-agent /app
 
 USER buildkite-agent
