@@ -69,8 +69,8 @@ steps:
   - label: ":go: lint"
     # depends_on: [docker_build]
     env:
-      GOCACHE: "/root/.go-build"
-      GOMODCACHE: "/root/go/pkg/mod"
+      GOCACHE: "/home/buildkite-agent/.go-build"
+      GOMODCACHE: "/home/buildkite-agent/go/pkg/mod"
     plugins:
       - aws-assume-role-with-web-identity#v1.1.0:
           role-arn: ${CACHE_ROLE}
