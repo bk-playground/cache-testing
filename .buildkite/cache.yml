@@ -22,4 +22,4 @@ dependencies:
   fallback_keys:
     - '{{ id }}-{{ agent.os }}-{{ agent.arch }}-'
   paths:
-    - ~/.buildx
+    - .buildx
