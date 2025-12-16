@@ -52,6 +52,8 @@ steps:
     env:
       GOCACHE: "/home/buildkite-agent/.go-build"
       GOMODCACHE: "/home/buildkite-agent/go/pkg/mod"
+      USER_ID: "2000"
+      GROUP_ID: "2000"
     plugins:
       - aws-assume-role-with-web-identity#v1.1.0:
           role-arn: ${CACHE_ROLE}
