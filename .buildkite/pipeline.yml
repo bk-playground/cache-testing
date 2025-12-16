@@ -48,22 +48,7 @@
 #           - echo '<details><summary>Coverage tree map</summary><img src="artifact://cover-tree.svg" alt="Test coverage tree map" width="70%"></details>' | buildkite-agent annotate --style "info"
 
 steps:
-  - label: "docker build"
-    key: docker_build
-    plugins:
-      - docker-compose#v5.6.0:
-          build: app
-          config: ".buildkite/docker-compose.yml"
-          retry:
-            automatic:
-              - limit: 2
-                exit_status: 17
-          create: true
-      - .buildkite/plugins/zstash:
-          ids: buildx
-
   - label: ":go: lint"
-    depends_on: [docker_build]
     env:
       GOCACHE: "/home/buildkite-agent/.go-build"
       GOMODCACHE: "/home/buildkite-agent/go/pkg/mod"
@@ -73,6 +58,10 @@ steps:
       - docker-compose#v5.6.0:
           run: app
           config: ".buildkite/docker-compose.yml"
+          builder:
+            name: container
+            driver: docker-container
+            create: true
           retry:
             automatic:
               - limit: 2
