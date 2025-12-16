@@ -56,7 +56,7 @@ steps:
       - aws-assume-role-with-web-identity#v1.1.0:
           role-arn: ${CACHE_ROLE}
       - docker-compose#v5.6.0:
-          build: app
+          run: app
           config: ".buildkite/docker-compose.yml"
           builder:
             name: container
