@@ -62,6 +62,7 @@ steps:
             name: container
             driver: docker-container
             create: true
+            use: true
           retry:
             automatic:
               - limit: 2
