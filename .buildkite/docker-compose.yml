@@ -6,6 +6,10 @@ services:
       args:
         - USER_ID=${USER_ID:-999}
         - GROUP_ID=${GROUP_ID:-999}
+      cache_from:
+        - type=local,src=.buildx
+      cache_to:
+        - type=local,dest=.buildx
     user: "${USER_ID:-999}:${GROUP_ID:-999}"
     volumes:
       - ..:/app
