@@ -60,6 +60,9 @@ steps:
       - docker-compose#v5.6.0:
           run: app
           config: ".buildkite/docker-compose.yml"
+          build-args:
+            - USER_ID=2000
+            - GROUP_ID=2000
           builder:
             name: container
             driver: docker-container
@@ -70,12 +73,7 @@ steps:
               - limit: 2
                 exit_status: 17
           propagate-environment: true
-          # cache-to:
-          #   - app:type=local,src=~/.buildx
-          # cache-from:
-          #   - app:type=local,src=~/.buildx
       - .buildkite/plugins/zstash:
-          # ids: buildx
           ids: buildx,golang_build,golang_pkg
     commands:
       - golangci-lint run --verbose --timeout 3m
