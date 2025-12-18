@@ -13,6 +13,6 @@ services:
     user: "${USER_ID:-2000}:${GROUP_ID:-2000}"
     volumes:
       - ..:/app
-      - ~/.go-build:/home/buildkite-agent/.go-build:rw
-      - ~/go/pkg/mod:/home/buildkite-agent/go/pkg/mod:rw
+      - ~/.go-build:/var/lib/buildkite-agent/.go-build:rw
+      - ~/go/pkg/mod:/var/lib/buildkite-agent/go/pkg/mod:rw
     working_dir: /app
