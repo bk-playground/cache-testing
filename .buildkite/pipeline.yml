@@ -74,7 +74,7 @@ steps:
                 exit_status: 17
           propagate-environment: true
       - .buildkite/plugins/zstash:
-          ids: buildx,golang_build,golang_pkg
+          ids: docker,golang_build,golang_pkg
     commands:
       - golangci-lint run --verbose --timeout 3m
   # - label: ":go: test"
