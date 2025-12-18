@@ -50,8 +50,8 @@
 steps:
   - label: ":go: lint"
     env:
-      GOCACHE: "/home/buildkite-agent/.go-build"
-      GOMODCACHE: "/home/buildkite-agent/go/pkg/mod"
+      GOCACHE: "/var/lib/buildkite-agent/.go-build"
+      GOMODCACHE: "/var/lib/buildkite-agent/go/pkg/mod"
       USER_ID: "2000"
       GROUP_ID: "2000"
     plugins:
